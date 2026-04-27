@@ -1,0 +1,26 @@
+# Sample envchain configuration used in integration tests.
+chain: sample-service
+
+stages:
+  - name: local
+    required:
+      - APP_ENV
+    optional:
+      - DEBUG
+      - LOG_LEVEL
+
+  - name: staging
+    required:
+      - APP_ENV
+      - DATABASE_URL
+      - REDIS_URL
+    optional:
+      - LOG_LEVEL
+
+  - name: production
+    required:
+      - APP_ENV
+      - DATABASE_URL
+      - REDIS_URL
+      - SECRET_KEY
+      - SENTRY_DSN
