@@ -50,6 +50,19 @@ func TestValidate_EmptyRequired(t *testing.T) {
 	}
 }
 
+func TestValidate_MultipleMissing(t *testing.T) {
+	// Neither DB_HOST nor DB_PORT are set
+	s := &envset.EnvSet{
+		Name:     "database",
+		Required: []string{"DB_HOST", "DB_PORT", "DB_NAME"},
+	}
+
+	errs := s.Validate()
+	if len(errs) != 3 {
+		t.Fatalf("expected 3 errors for all missing vars, got %d: %v", len(errs), errs)
+	}
+}
+
 func TestResolve_IncludesOptional(t *testing.T) {
 	t.Setenv("APP_HOST", "0.0.0.0")
 	t.Setenv("APP_DEBUG", "true")
