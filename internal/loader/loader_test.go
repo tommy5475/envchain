@@ -54,6 +54,15 @@ func TestParse_NoStages(t *testing.T) {
 	}
 }
 
+func TestParse_InvalidYAML(t *testing.T) {
+	// Ensure malformed YAML returns a parse error rather than panicking.
+	data := []byte("chain: [unclosed bracket\n")
+	_, err := loader.Parse(data)
+	if err == nil {
+		t.Fatal("expected error for invalid YAML, got nil")
+	}
+}
+
 func TestToEnvSets_CorrectMapping(t *testing.T) {
 	cfg, err := loader.Parse(validYAML)
 	if err != nil {
